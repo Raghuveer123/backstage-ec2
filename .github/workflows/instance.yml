@@ -88,5 +88,7 @@ jobs:
           terraform destroy \
             -var "instanceName=${{ github.event.inputs.instanceName }}" \
             -var "awsRegion=${{ github.event.inputs.awsRegion }}" \
+            -var "aws_access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
+            -var "aws_secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}" \
             -auto-approve
         working-directory: .

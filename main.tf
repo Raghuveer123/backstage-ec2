@@ -11,10 +11,13 @@ terraform {
 
 provider "aws" {
   region     = var.awsRegion
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
 }
 
+
 resource "aws_instance" "example_server" {
-  ami           = "ami-0c7217cdde317cfec"
+  ami           = "ami-04b4f1a9cf54c11d0"
   instance_type = var.instanceType
 
   tags = {
