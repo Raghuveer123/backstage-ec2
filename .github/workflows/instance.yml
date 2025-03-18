@@ -45,11 +45,12 @@ jobs:
         working-directory: .
 
       - name: Terraform Apply
-        run: terraform apply \
-          -var "instanceName=${{ github.event.inputs.instanceName }}" \
-          -var "awsRegion=${{ github.event.inputs.awsRegion }}" \
-          -var "instanceType=${{ github.event.inputs.instanceType }}" \
-          -auto-approve
+        run: |
+          terraform apply \
+            -var "instanceName=${{ github.event.inputs.instanceName }}" \
+            -var "awsRegion=${{ github.event.inputs.awsRegion }}" \
+            -var "instanceType=${{ github.event.inputs.instanceType }}" \
+            -auto-approve
         working-directory: .
 
   destroy_instance:
@@ -65,18 +66,20 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
       - name: Terraform Init
         run: terraform init
         working-directory: .
-      
+
       - name: Terraform Format
         run: terraform fmt
         working-directory: .
 
       - name: Terraform Destroy
-        run: terraform destroy \
-          -var "instanceName=${{ github.event.inputs.instanceName }}" \
-          -var "awsRegion=${{ github.event.inputs.awsRegion }}" \
-          -auto-approve
+        run: |
+          terraform destroy \
+            -var "instanceName=${{ github.event.inputs.instanceName }}" \
+            -var "awsRegion=${{ github.event.inputs.awsRegion }}" \
+            -auto-approve
         working-directory: .
